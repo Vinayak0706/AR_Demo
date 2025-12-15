@@ -974,7 +974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastManager: {fileID: 1281218008}
   planeManager: {fileID: 1281218005}
-  selectedObject: {fileID: 11400000, guid: ac3ab092c8da5d94f93eac5134a298a7, type: 2}
+  selectedObject: {fileID: 0}
   instructionText: {fileID: 852187628}
 --- !u!1 &597427470
 GameObject:

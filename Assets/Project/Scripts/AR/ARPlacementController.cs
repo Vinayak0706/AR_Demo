@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class ARPlacementController : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class ARPlacementController : MonoBehaviour
 
     [Header("Placement")]
     public PlaceableObjectData selectedObject;
-    
+
 
     [Header("UI")]
     public InstructionText instructionText;
@@ -24,6 +25,17 @@ public class ARPlacementController : MonoBehaviour
 
     void Update()
     {
+        Touch touch = Input.GetTouch(0);
+        if (Input.touchCount > 0)
+        {
+            // Touch touch = Input.GetTouch(0);
+
+            if (EventSystem.current != null &&
+                EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                return; // Touch is on UI, ignore AR interaction
+            }
+        }
 
         if (Input.touchCount == 0)
             return;
@@ -43,7 +55,7 @@ public class ARPlacementController : MonoBehaviour
             return;
         }
 
-        Touch touch = Input.GetTouch(0);
+
         if (touch.phase != TouchPhase.Began)
             return;
 

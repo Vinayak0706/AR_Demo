@@ -1,12 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using UnityEngine.EventSystems;
 
 public class ARObjectInteraction : MonoBehaviour
 {
-  [Header("AR")]
+    
+    public static ARObjectInteraction ActiveObject;
+    public GameObject highlightIndicator;
+
+    [Header("AR")]
     public ARRaycastManager raycastManager;
 
     [Header("Move")]
@@ -33,13 +37,50 @@ public class ARObjectInteraction : MonoBehaviour
 
     void Update()
     {
+        if (Input.touchCount == 0)
+            return;
+
+        Touch touch = Input.GetTouch(0);
+
+        
+        if (EventSystem.current != null &&
+            EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            return;
+
+        
+        if (touch.phase == TouchPhase.Began)
+        {
+            if (IsTouchOnThisObject(touch))
+            {
+                ActiveObject = this;
+                highlightIndicator.SetActive(true); 
+            }
+            else
+            {
+                highlightIndicator.SetActive(false);
+                return; // Touch is not for this object
+                
+            }
+        }
+
+        
+        if (ActiveObject != this)
+            return;
+
         if (Input.touchCount == 1)
         {
-            HandleSingleTouch(Input.GetTouch(0));
+            HandleSingleTouch(touch);
         }
         else if (Input.touchCount == 2)
         {
             HandlePinchScale();
+        }
+
+
+        if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+        {
+            ActiveObject = null;
+            isRotating = false;
         }
     }
 
@@ -71,11 +112,6 @@ public class ARObjectInteraction : MonoBehaviour
             }
 
             lastTouchPos = touch.position;
-        }
-
-        if (touch.phase == TouchPhase.Ended)
-        {
-            isRotating = false;
         }
     }
 
@@ -114,5 +150,16 @@ public class ARObjectInteraction : MonoBehaviour
         newScale = Vector3.one * Mathf.Clamp(newScale.x, minScale, maxScale);
 
         transform.localScale = newScale;
+    }
+
+ 
+    bool IsTouchOnThisObject(Touch touch)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            return hit.transform == transform;
+        }
+        return false;
     }
 }
