@@ -9,9 +9,11 @@ public class ARPlacementController : MonoBehaviour
 {
     [Header("AR")]
     public ARRaycastManager raycastManager;
+    public ARPlaneManager planeManager;
 
     [Header("Placement")]
     public PlaceableObjectData selectedObject;
+    
 
     [Header("UI")]
     public InstructionText instructionText;
@@ -33,13 +35,11 @@ public class ARPlacementController : MonoBehaviour
 
         if (raycastManager == null)
         {
-            Debug.LogWarning("ARRaycastManager reference is missing on ARPlacementController.");
             return;
         }
 
         if (selectedObject == null || selectedObject.prefab == null)
         {
-            Debug.LogWarning("No placeable object selected or selected object's prefab is null.");
             return;
         }
 
@@ -63,6 +63,7 @@ public class ARPlacementController : MonoBehaviour
                 interaction.raycastManager = raycastManager;
             }
             instructionText.SetInstruction("Drag to move • Pinch to scale • Rotate with two fingers");
+            DisablePlaneVisualization();
         }
     }
 
@@ -70,5 +71,15 @@ public class ARPlacementController : MonoBehaviour
     {
         selectedObject = data;
         placedObject = null;
+    }
+
+    private void DisablePlaneVisualization()
+    {
+        planeManager.enabled = false;
+
+        foreach (var plane in planeManager.trackables)
+        {
+            plane.gameObject.SetActive(false);
+        }
     }
 }

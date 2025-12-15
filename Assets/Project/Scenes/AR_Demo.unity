@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastManager: {fileID: 1281218008}
+  planeManager: {fileID: 1281218005}
   selectedObject: {fileID: 11400000, guid: ac3ab092c8da5d94f93eac5134a298a7, type: 2}
   instructionText: {fileID: 852187628}
 --- !u!1 &655771681
@@ -747,7 +748,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1379,7 +1380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1760703bbd54c04488a8d10600262ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlanePrefab: {fileID: 5339570464702507740, guid: 66be602a425bc03499504a9f9d274ce1, type: 3}
+  m_PlanePrefab: {fileID: 5248474213086922902, guid: e6abfb1cdc9f9ce4d9cb8935eaa9833b, type: 3}
   m_DetectionMode: 1
 --- !u!114 &1281218006
 MonoBehaviour:

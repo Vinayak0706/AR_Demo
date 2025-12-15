@@ -60,9 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastManager: {fileID: 0}
-  rotationSpeed: 5
+  moveSmooth: 10
   minScale: 0.05
   maxScale: 0.5
+  rotationSpeed: 0.5
 --- !u!1 &4805316882097588260
 GameObject:
   m_ObjectHideFlags: 0
