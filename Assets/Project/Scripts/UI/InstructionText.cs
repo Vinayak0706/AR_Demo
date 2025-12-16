@@ -7,13 +7,6 @@ public class InstructionText : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI instructionText;
 
-    void Awake()
-    {
-        // Safety check
-        if (instructionText == null)
-            instructionText = GetComponent<TextMeshProUGUI>();
-    }
-
     public void SetInstruction(string message)
     {
         instructionText.text = message;
